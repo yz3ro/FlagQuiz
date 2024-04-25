@@ -11,4 +11,10 @@ interface CountryDao {
     suspend fun GetAllCountry() : List<Countries>
     @Insert
     suspend fun addCountry(countries: List<Countries>)
+
+    @Query("SELECT * FROM counties ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomCountry(): Countries
+
+    @Query("SELECT * FROM counties WHERE country_name != :selectedCountryName ORDER BY RANDOM() LIMIT 3")
+    suspend fun getThreeRandomCountryNames(selectedCountryName: String): List<Countries>
 }

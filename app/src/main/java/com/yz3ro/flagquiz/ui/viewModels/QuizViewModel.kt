@@ -34,6 +34,23 @@ class QuizViewModel @Inject constructor (private val repo : FlagRepository) : Vi
             countryList.value = repo.getAllCountry()
         }
     }
+
+    var randomCountryList = MutableLiveData<List<Countries>>()
+    fun getRandomCountry() {
+        CoroutineScope(Dispatchers.Main).launch{
+            randomCountryList.value = listOf(repo.getRandomCountry())
+        }
+    }
+
+    val randomCountryNameList = MutableLiveData<List<String>>()
+   fun getRandomCountryName(selectedCountryName: String){
+       CoroutineScope(Dispatchers.Main).launch {
+           val randomCountries = repo.getThreeRandomCountryNames(selectedCountryName)
+           val countryNames = randomCountries.map { it.country_name }
+           randomCountryNameList.value = countryNames
+       }
+    }
+
     fun loadData(): Boolean {
         var success = false
         viewModelScope.launch {
@@ -42,7 +59,7 @@ class QuizViewModel @Inject constructor (private val repo : FlagRepository) : Vi
                 val countryInfoList = countries.map { country ->
                     CountryInfo(
                         turkishName = country.translations?.get("tur")?.get("official"),
-                        flagUrl = country.flags["svg"],
+                        flagUrl = country.flags["png"],
                         region = country.region
                     )
                 }
@@ -56,4 +73,5 @@ class QuizViewModel @Inject constructor (private val repo : FlagRepository) : Vi
         }
         return success
     }
+
 }

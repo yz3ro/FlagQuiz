@@ -19,7 +19,7 @@ class FlagDataSource(private val fapi : FlagAPI,var cdao : CountryDao) {
                0,
                 country.turkishName.toString(),
                 country.flagUrl.toString(),
-                country.flagUrl.toString()
+                country.region.toString()
             )
         })
     }
@@ -27,4 +27,13 @@ class FlagDataSource(private val fapi : FlagAPI,var cdao : CountryDao) {
         withContext(Dispatchers.IO){
             return@withContext cdao.GetAllCountry()
         }
+    suspend fun getRandomCountry() : Countries =
+        withContext(Dispatchers.IO){
+            return@withContext cdao.getRandomCountry()
+        }
+    suspend fun getThreeRandomCountryNames(selectedCountryName: String): List<Countries> =
+        withContext(Dispatchers.IO){
+            return@withContext cdao.getThreeRandomCountryNames(selectedCountryName)
+        }
+
 }
