@@ -17,16 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor (private val repo : FlagRepository) : ViewModel() {
-    private var dataLoaded = false
 
-    private val _countryInfoList = MutableLiveData<List<CountryInfo>>()
-    val countryInfoList: LiveData<List<CountryInfo>> = _countryInfoList
-    init {
-        if (!dataLoaded) {
-            loadData()
-            dataLoaded = true
-        }
-    }
+
     var countryList = MutableLiveData<List<Countries>>()
 
     fun getAllCountry() {
@@ -43,35 +35,23 @@ class QuizViewModel @Inject constructor (private val repo : FlagRepository) : Vi
     }
 
     val randomCountryNameList = MutableLiveData<List<String>>()
-   fun getRandomCountryName(selectedCountryName: String){
-       CoroutineScope(Dispatchers.Main).launch {
-           val randomCountries = repo.getThreeRandomCountryNames(selectedCountryName)
-           val countryNames = randomCountries.map { it.country_name }
-           randomCountryNameList.value = countryNames
-       }
-    }
-
-    fun loadData(): Boolean {
-        var success = false
-        viewModelScope.launch {
-            try {
-                val countries = repo.getCountry()
-                val countryInfoList = countries.map { country ->
-                    CountryInfo(
-                        turkishName = country.translations?.get("tur")?.get("official"),
-                        flagUrl = country.flags["png"],
-                        region = country.region
-                    )
+    private var isRandomCountryNameRequested = false
+    fun getRandomCountryName(selectedCountryName: String) {
+        if (!isRandomCountryNameRequested) {
+            isRandomCountryNameRequested = true
+            Log.d("QuizViewModel", "Random country name request started.")
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val randomCountries = repo.getThreeRandomCountryNames(selectedCountryName)
+                    val countryNames = randomCountries?.map { it.country_name } ?: emptyList()
+                    randomCountryNameList.value = countryNames
+                    Log.d("QuizViewModel", "Random country names: $countryNames")
+                }finally {
+                    isRandomCountryNameRequested = false
+                    Log.d("QuizViewModel", "Random country name request finished.")
                 }
-                repo.refreshFlags(countryInfoList)
-                _countryInfoList.postValue(countryInfoList)
-                success = true
-            } catch (e: Exception) {
-                Log.e("QuizViewModel", "Error loading and saving data to database: ${e.message}")
-                success = false
             }
         }
-        return success
     }
 
 }

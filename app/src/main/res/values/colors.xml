@@ -2,5 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="option">#3C5B6F</color>
+    <color name="option">#FFF8DC</color>
+    <color name="background">#6C0345</color>
+    <color name="text">#DC6B19</color>
+    <color name="toolbar">#9C0764</color>
+    <color name="trueoption">#DCFFB7</color>
+    <color name="falseoption">#FF6868</color>
 </resources>

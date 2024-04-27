@@ -3,11 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/quizFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.yz3ro.flagquiz.ui.fragments.QuizFragment"
         android:label="fragment_quiz"
         tools:layout="@layout/fragment_quiz" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.yz3ro.flagquiz.ui.fragments.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
 </navigation>
