@@ -6,9 +6,10 @@ import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = "counties")
-data class Countries(@PrimaryKey(autoGenerate = true)
-                     @ColumnInfo(name = "country_id") @NotNull var country_id : Int,
-                     @ColumnInfo(name = "country_name") @NotNull var country_name : String,
-                     @ColumnInfo(name = "flag_url") @NotNull var flag_url : String,
-                     @ColumnInfo(name = "region") @NotNull var region : String,
-    )
+data class Countries(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "country_id") var country_id: Int,
+    @ColumnInfo(name = "country_name") var country_name: String,
+    @ColumnInfo(name = "flag_url") var flag_url: String,
+    @ColumnInfo(name = "region") var region: String,
+)

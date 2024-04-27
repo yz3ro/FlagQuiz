@@ -21,7 +21,7 @@
             android:layout_height="150dp"
             android:layout_marginTop="296dp"
             android:backgroundTint="@color/option"
-            android:text="OYNA"
+            android:text="@string/oyna"
             android:textColor="@color/text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

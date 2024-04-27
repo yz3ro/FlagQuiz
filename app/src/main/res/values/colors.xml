@@ -6,6 +6,6 @@
     <color name="background">#6C0345</color>
     <color name="text">#DC6B19</color>
     <color name="toolbar">#9C0764</color>
-    <color name="trueoption">#DCFFB7</color>
+    <color name="trueoption">#9ADE7B</color>
     <color name="falseoption">#FF6868</color>
 </resources>

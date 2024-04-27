@@ -1,7 +1,6 @@
 package com.yz3ro.flagquiz.ui.viewModels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,17 +11,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repo : FlagRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(private val repo: FlagRepository) : ViewModel() {
     private var dataLoaded = false
-
+    var isDataDownloaded = false
     private val _countryInfoList = MutableLiveData<List<CountryInfo>>()
-    val countryInfoList: LiveData<List<CountryInfo>> = _countryInfoList
+
     init {
         if (!dataLoaded) {
             loadData()
             dataLoaded = true
         }
     }
+
     fun loadData(): Boolean {
         var success = false
         viewModelScope.launch {

@@ -5,14 +5,15 @@ import com.yz3ro.flagquiz.data.entity.Countries
 import com.yz3ro.flagquiz.data.entity.Country
 import com.yz3ro.flagquiz.data.entity.CountryInfo
 
-class FlagRepository(private val fds : FlagDataSource) {
+class FlagRepository(private val fds: FlagDataSource) {
     suspend fun getCountry(): List<Country> = fds.getCountry()
 
-    suspend fun getRandomCountry() : Countries = fds.getRandomCountry()
+    suspend fun getRandomCountry(): Countries = fds.getRandomCountry()
 
-    suspend fun getThreeRandomCountryNames(selectedCountryName: String): List<Countries> =fds.getThreeRandomCountryNames(selectedCountryName)
+    suspend fun getThreeRandomCountryNames(selectedCountryName: String): List<Countries> =
+        fds.getThreeRandomCountryNames(selectedCountryName)
 
     suspend fun refreshFlags(flags: List<CountryInfo>) = fds.refreshFlags(flags)
 
-    suspend fun getAllCountry() : List<Countries> = fds.getAllCountry()
+    suspend fun getAllCountry(): List<Countries> = fds.getAllCountry()
 }
