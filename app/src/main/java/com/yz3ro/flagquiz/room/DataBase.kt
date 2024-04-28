@@ -10,21 +10,4 @@ import com.yz3ro.flagquiz.data.entity.Countries
 abstract class DataBase : RoomDatabase() {
     abstract fun getCountryDao(): CountryDao
 
-    companion object {
-        var INSTANCE: DataBase? = null
-        fun accessDatabase(context: Context): DataBase? {
-            if (INSTANCE == null) {
-                synchronized(DataBase::class) {
-                    INSTANCE = Room.databaseBuilder(
-                        context.applicationContext,
-                        DataBase::class.java,
-                        "flagquiz.sqlite"
-                    )
-                        .createFromAsset("flagquiz.sqlite")
-                        .build()
-                }
-            }
-            return INSTANCE
-        }
-    }
 }
