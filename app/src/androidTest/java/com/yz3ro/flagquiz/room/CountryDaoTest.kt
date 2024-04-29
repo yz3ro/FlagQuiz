@@ -7,6 +7,8 @@ import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.yz3ro.flagquiz.data.entity.Countries
 import com.yz3ro.flagquiz.data.entity.CountryInfo
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -14,22 +16,30 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
+import javax.inject.Named
 
 @SmallTest
 @ExperimentalCoroutinesApi
+@HiltAndroidTest
 class CountryDaoTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+
     private lateinit var dao : CountryDao
-    private lateinit var database : DataBase
+
+    @Named("testDatabase")
+    @Inject
+    lateinit var database : DataBase
 
     @Before
     fun setup(){
-        database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),DataBase::class.java
-        ).allowMainThreadQueries().build()
+        hiltRule.inject()
         dao = database.getCountryDao()
     }
 

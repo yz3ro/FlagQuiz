@@ -2,11 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="option">#B8ACF6</color>
-    <color name="background">#FFFFFFFF</color>
-    <color name="text">#FF000000</color>
+    <color name="option">#2B273F</color>
+    <color name="background">#141414</color>
+    <color name="text">#FFFFFF</color>
     <color name="true_option">#9ADE7B</color>
     <color name="false_option">#FF6868</color>
-    <color name="app_color">#7E71C1</color>
-    <color name="popup_bg">#F3F0FF</color>
+    <color name="app_color">#8E82C9</color>
+    <color name="popup_bg">#111111</color>
 </resources>

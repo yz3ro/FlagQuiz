@@ -41,9 +41,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    defaultConfig{
-        testInstrumentationRunner = "com.example.android.dagger.CustomTestRunner"
-    }
 }
 
 dependencies {
@@ -57,12 +54,29 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    testImplementation ("org.mockito:mockito-core:3.12.4")
-    testImplementation ("androidx.arch.core:core-testing:2.1.0")
-    androidTestImplementation ("androidx.arch.core:core-testing:2.1.0")
+    // TestImplementations
+    implementation ("androidx.test:core:1.5.0")
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.hamcrest:hamcrest-all:1.3")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
+    testImplementation ("org.robolectric:robolectric:4.8.1")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     testImplementation ("com.google.truth:truth:1.1.3")
+    testImplementation ("org.mockito:mockito-core:4.7.0")
+
+    // Android Test Implementations
+    androidTestImplementation ("junit:junit:4.13.2")
+    //androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.12.1"
+    androidTestImplementation ("org.mockito:mockito-android:4.7.0")
+    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    androidTestImplementation ("androidx.arch.core:core-testing:2.2.0")
     androidTestImplementation ("com.google.truth:truth:1.1.3")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation ("org.mockito:mockito-core:4.7.0")
     androidTestImplementation ("com.google.dagger:hilt-android-testing:2.51.1")
+    kaptAndroidTest ("com.google.dagger:hilt-android-compiler:2.51.1")
+    debugImplementation ("androidx.fragment:fragment-testing:1.7.0-rc02")
+    //debugImplementation "androidx.fragment:fragment-testing:1.3.0-alpha08"
 
     kaptTest ("com.google.dagger:hilt-android-compiler:2.51.1")
     kaptAndroidTest ("com.google.dagger:hilt-android-compiler:2.51.1")

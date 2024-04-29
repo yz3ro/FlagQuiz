@@ -6,7 +6,20 @@
         <State />
       </entry>
       <entry key="app">
-        <State />
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\hiedi\.android\avd\Pixel_4_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-29T14:39:10.742070600Z" />
+        </State>
       </entry>
       <entry key="getRandomCountry_success()">
         <State />
@@ -15,6 +28,9 @@
         <State />
       </entry>
       <entry key="insertCountryTesting()">
+        <State />
+      </entry>
+      <entry key="test_navigation_from_home_to_quiz_fragment()">
         <State />
       </entry>
     </value>

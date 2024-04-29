@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">FlagQuiz</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="skor">Skor :</string>
     <string name="_0">0</string>
     <string name="flag">flag</string>
     <string name="oyna">OYNA</string>
+    <string name="choose">Doğru cevabı seç:</string>
+    <string name="lose">Kaybettin!</string>
+    <string name="retry">Tekrar oyna</string>
+    <string name="highest_score">En yüksek skorunuz:</string>
 </resources>

@@ -124,7 +124,7 @@ class QuizFragment : Fragment() {
             handler.postDelayed({ loadNewQuestion() },800)
             binding.txtScore.text = score.toString()
             button.backgroundTintList =
-                ColorStateList.valueOf(resources.getColor(R.color.trueoption))
+                ColorStateList.valueOf(resources.getColor(R.color.true_option))
             handler.postDelayed({
                 button.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.option))
@@ -134,7 +134,7 @@ class QuizFragment : Fragment() {
             binding.txtScore.text = score.toString()
             Log.e("answer", "false")
             button.backgroundTintList =
-                ColorStateList.valueOf(resources.getColor(R.color.falseoption))
+                ColorStateList.valueOf(resources.getColor(R.color.false_option))
             handler.postDelayed({
                 button.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.option))

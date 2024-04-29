@@ -11,7 +11,7 @@ import androidx.navigation.Navigation
 import com.yz3ro.flagquiz.R
 import com.yz3ro.flagquiz.databinding.FragmentHomeBinding
 import com.yz3ro.flagquiz.ui.viewModels.HomeViewModel
-import com.yz3ro.flagquiz.util.navigate
+import com.yz3ro.flagquiz.util.navigatex
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
             viewModel.isDataDownloaded = true
         }
         binding.button.setOnClickListener {
-            Navigation.navigate(it, R.id.action_homeFragment_to_quizFragment)
+            Navigation.navigatex(it, R.id.action_homeFragment_to_quizFragment)
         }
     }
 }
