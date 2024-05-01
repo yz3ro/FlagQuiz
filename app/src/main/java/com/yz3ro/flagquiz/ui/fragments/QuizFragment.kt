@@ -4,13 +4,13 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import androidx.fragment.app.Fragment
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.databinding.DataBindingUtil
+import android.widget.PopupWindow
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.yz3ro.flagquiz.R
@@ -21,20 +21,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class QuizFragment : Fragment() {
     private lateinit var binding: FragmentQuizBinding
-    private val viewModel: QuizViewModel by viewModels()
+    val viewModel: QuizViewModel by viewModels()
     private val randomOptions = mutableListOf<String>()
-    private var selectedCountry: String? = null
-    private var score = 0
+    var selectedCountry: String? = null
+    var score = 0
     private val handler = Handler(Looper.getMainLooper())
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_quiz, container, false)
+        binding = FragmentQuizBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
@@ -75,9 +74,6 @@ class QuizFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.countryList.observe(viewLifecycleOwner) {
-            Log.e("room", it.toString())
-        }
         viewModel.randomCountryList.observe(viewLifecycleOwner) { countries ->
             if (countries.isNotEmpty()) {
                 selectedCountry = countries.first().country_name
@@ -86,16 +82,13 @@ class QuizFragment : Fragment() {
                 Glide.with(this)
                     .load(flagUrl)
                     .into(binding.imgFlag)
-                Log.e("random ", flagUrl)
                 viewModel.getRandomCountryName(selectedCountry.toString())
-                Log.d("QuizFragment", "Selected country: $selectedCountry")
             }
         }
         viewModel.randomCountryNameList.observe(viewLifecycleOwner) { countryNames ->
             if (countryNames.size == 3) {
                 val correctCountryName = selectedCountry
                 setRandomButtonTexts(countryNames, correctCountryName.toString())
-                Log.e("random", countryNames.toString())
             } else {
                 val correctCountryName = selectedCountry
                 setRandomButtonTexts(countryNames, correctCountryName.toString())
@@ -108,7 +101,6 @@ class QuizFragment : Fragment() {
         randomOptions.add(correctCountryName)
         randomOptions.addAll(countryNames.filter { it != correctCountryName })
         randomOptions.shuffle()
-        Log.d("QuizFragment", "Random options size: ${randomOptions.size}")
         binding.apply {
             btnOption1.text = randomOptions.getOrNull(0) ?: ""
             btnOption2.text = randomOptions.getOrNull(1) ?: ""
@@ -117,11 +109,11 @@ class QuizFragment : Fragment() {
         }
     }
 
-    private fun checkAnswer(selectedAnswer: String, correctAnswer: String, button: Button) {
+    fun checkAnswer(selectedAnswer: String, correctAnswer: String, button: Button) {
         if (selectedAnswer == correctAnswer) {
-            Log.e("answer", "true")
+            button.isEnabled = false
             score += 10
-            handler.postDelayed({ loadNewQuestion() },800)
+            handler.postDelayed({ loadNewQuestion() }, 800)
             binding.txtScore.text = score.toString()
             button.backgroundTintList =
                 ColorStateList.valueOf(resources.getColor(R.color.true_option))
@@ -131,8 +123,10 @@ class QuizFragment : Fragment() {
             }, 500)
         } else {
             score -= 10
+            if (score <= 0) {
+                showGameOverPopup()
+            }
             binding.txtScore.text = score.toString()
-            Log.e("answer", "false")
             button.backgroundTintList =
                 ColorStateList.valueOf(resources.getColor(R.color.false_option))
             handler.postDelayed({
@@ -155,11 +149,37 @@ class QuizFragment : Fragment() {
                 ColorStateList.valueOf(resources.getColor(R.color.option))
             btnOption4.backgroundTintList =
                 ColorStateList.valueOf(resources.getColor(R.color.option))
+            btnOption1.isEnabled = true
+            btnOption2.isEnabled = true
+            btnOption3.isEnabled = true
+            btnOption4.isEnabled = true
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAllCountry()
+    private fun showGameOverPopup() {
+        val inflater = requireActivity().layoutInflater
+        val popupView = inflater.inflate(R.layout.popup_lose, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        val btnOk = popupView.findViewById<Button>(R.id.button2)
+        btnOk.setOnClickListener {
+            popupWindow.dismiss()
+            resetGame()
+        }
+        popupWindow.isOutsideTouchable = false
+        popupWindow.isFocusable = false
+        popupWindow.showAtLocation(requireActivity().window.decorView, Gravity.CENTER, 0, 0)
     }
+
+    private fun resetGame() {
+        score = 0
+        viewModel.getRandomCountry()
+        viewModel.getRandomCountryName(selectedCountry.toString())
+        binding.txtScore.text = score.toString()
+    }
+
 }
+

@@ -35,7 +35,7 @@ class HomeFragmentTest {
         hiltRule.inject()
     }
 
-    @SuppressLint("CheckResult")
+
     @Test
     fun test_navigation_from_home_to_quiz_fragment() {
 

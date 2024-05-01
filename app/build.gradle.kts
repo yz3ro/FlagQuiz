@@ -41,6 +41,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    packagingOptions {
+        resources {
+            // Mockito kütüphanesi için MockMaker'ın doğru yerde bulunmasını sağlar
+            exclude ("mockito-extensions/org.mockito.plugins.MockMaker")
+        }
+    }
 }
 
 dependencies {
@@ -66,7 +72,7 @@ dependencies {
 
     // Android Test Implementations
     androidTestImplementation ("junit:junit:4.13.2")
-    //androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.12.1"
+    androidTestImplementation ("com.linkedin.dexmaker:dexmaker-mockito:2.28.1")
     androidTestImplementation ("org.mockito:mockito-android:4.7.0")
     androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     androidTestImplementation ("androidx.arch.core:core-testing:2.2.0")
